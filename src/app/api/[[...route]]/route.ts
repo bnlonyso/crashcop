@@ -5,7 +5,6 @@ import { cors } from 'hono/cors'
 import { createMiddleware } from 'hono/factory'
 import { resolveSession, Session } from '@/lib/token/resolver'
 import { getCookie } from 'hono/cookie'
-import { timeout } from 'hono/timeout'
 import { HTTPException } from 'hono/http-exception'
 import auth from '@/server/routers/auth'
 import bridge from '@/server/routers/bridge'
@@ -13,6 +12,21 @@ import { env } from '@/env'
 
 export const runtime = env.RUNTIME
 export const maxDuration = 30
+
+const timeout = (duration: number) =>
+  createMiddleware(async (c, next) => {
+    let timer: NodeJS.Timeout | undefined
+    const timeoutPromise = new Promise((_, reject) => {
+      timer = setTimeout(() => {
+        reject(new HTTPException(504, { message: 'Gateway Timeout' }))
+      }, duration)
+    })
+    try {
+      await Promise.race([next(), timeoutPromise])
+    } finally {
+      if (timer) clearTimeout(timer)
+    }
+  })
 
 const app = new Hono().basePath('/api')
 
