@@ -15,8 +15,8 @@ const fontSans = FontSans({
 })
 
 export const metadata = {
-  title: 'crashed.nis',
-  description: 'crashed.nis',
+  title: 'crashcop — электронный дневник и симулятор оценок',
+  description: 'crashcop — удобный дневник и умный симулятор оценок',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 }
 
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="ru" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen bg-background font-sans antialiased selection:bg-purple-500 selection:text-white',
           fontSans.variable,
         )}
       >

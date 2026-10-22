@@ -3,52 +3,52 @@
 @tailwind utilities;
 
 :root {
-  --background: 220, 14%, 96%;
-  --foreground: 20 14.3% 4.1%;
+  --background: 270 20% 98%;
+  --foreground: 265 35% 12%;
   --card: 0 0% 100%;
-  --card-foreground: 20 14.3% 4.1%;
+  --card-foreground: 265 35% 12%;
   --popover: 0 0% 100%;
-  --popover-foreground: 20 14.3% 4.1%;
-  --primary: 47.9 95.8% 53.1%;
-  --primary-foreground: 26 83.3% 14.1%;
-  --secondary: 60 4.8% 95.9%;
-  --secondary-foreground: 24 9.8% 10%;
-  --muted: 60 4.8% 95.9%;
-  --muted-foreground: 25 5.3% 44.7%;
-  --accent: 60 4.8% 95.9%;
-  --accent-foreground: 24 9.8% 10%;
+  --popover-foreground: 265 35% 12%;
+  --primary: 268 85% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 270 25% 94%;
+  --secondary-foreground: 268 60% 25%;
+  --muted: 270 15% 93%;
+  --muted-foreground: 268 15% 45%;
+  --accent: 268 70% 93%;
+  --accent-foreground: 268 75% 25%;
   --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 60 9.1% 97.8%;
-  --border: 20 5.9% 90%;
-  --input: 20 5.9% 90%;
-  --ring: 20 14.3% 4.1%;
-  --radius: 0.75rem;
+  --destructive-foreground: 0 0% 98%;
+  --border: 270 18% 88%;
+  --input: 270 18% 88%;
+  --ring: 268 85% 60%;
+  --radius: 0.85rem;
 }
 
 .dark {
-  --background: 20 14.3% 4.1%;
-  --foreground: 60 9.1% 97.8%;
-  --card: 12 6.5% 15.1%;
-  --card-foreground: 60 9.1% 97.8%;
-  --popover: 20 14.3% 4.1%;
-  --popover-foreground: 60 9.1% 97.8%;
-  --primary: 47.9 95.8% 53.1%;
-  --primary-foreground: 26 83.3% 14.1%;
-  --secondary: 12 6.5% 15.1%;
-  --secondary-foreground: 60 9.1% 97.8%;
-  --muted: 12 6.5% 15.1%;
-  --muted-foreground: 24 5.4% 63.9%;
-  --accent: 12 6.5% 15.1%;
-  --accent-foreground: 60 9.1% 97.8%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 60 9.1% 97.8%;
-  --border: 12 6.5% 15.1%;
-  --input: 12 6.5% 15.1%;
-  --ring: 35.5 91.7% 32.9%;
+  --background: 268 40% 7%;
+  --foreground: 270 25% 96%;
+  --card: 268 30% 12%;
+  --card-foreground: 270 25% 96%;
+  --popover: 268 35% 10%;
+  --popover-foreground: 270 25% 96%;
+  --primary: 268 85% 65%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 268 25% 18%;
+  --secondary-foreground: 270 25% 96%;
+  --muted: 268 25% 18%;
+  --muted-foreground: 268 16% 65%;
+  --accent: 268 30% 22%;
+  --accent-foreground: 270 25% 96%;
+  --destructive: 0 62.8% 45%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 268 25% 19%;
+  --input: 268 25% 19%;
+  --ring: 268 85% 65%;
 }
 
 ::selection {
-  color: black;
+  color: white;
   background-color: hsl(var(--primary));
 }
 

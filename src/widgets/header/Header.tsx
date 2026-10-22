@@ -9,16 +9,21 @@ const Header = () => {
   const { data: contingent, isLoading, isError, isStale } = useContingent()
 
   return (
-    <header className="my-2 flex flex-row">
+    <header className="my-2 flex flex-row items-center">
       <Logo />
-      <div className="mx-3 py-2">
-        <h2 className="text-ellipsis text-[18px] font-semibold tracking-tight sm:text-xl">
-          {!isError && contingent
-            ? `${contingent.lastName} ${contingent.firstName}`
-            : isError
-              ? 'crashed.nis'
-              : null}
-        </h2>
+      <div className="mx-3 py-1">
+        <div className="flex items-center gap-2">
+          <h2 className="text-ellipsis text-[18px] font-bold tracking-tight sm:text-xl">
+            {!isError && contingent
+              ? `${contingent.lastName} ${contingent.firstName}`
+              : isError
+                ? 'crashcop'
+                : 'crashcop'}
+          </h2>
+          <span className="rounded-full bg-gradient-to-r from-purple-500/15 to-indigo-500/15 px-2 py-0.5 text-[10px] font-bold text-primary border border-primary/20">
+            PRO
+          </span>
+        </div>
         {isLoading ||
           (isStale && (
             <>
@@ -27,8 +32,8 @@ const Header = () => {
             </>
           ))}
         {!isError && contingent && (
-          <p className="text-ellipsis text-[14px] leading-none text-muted-foreground sm:text-[16px]">
-            {contingent.data.Klass} - {contingent.data.School?.Name?.ru || ''}
+          <p className="text-ellipsis text-[13px] leading-none text-muted-foreground sm:text-[15px]">
+            {contingent.data.Klass} • {contingent.data.School?.Name?.ru || ''}
           </p>
         )}
       </div>
