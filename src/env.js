@@ -7,8 +7,8 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    NODE_ENV: z.enum(['development', 'test', 'production']),
-    RUNTIME: z.enum(['edge', 'node']),
+    NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+    RUNTIME: z.enum(['edge', 'node']).default('node'),
   },
 
   /**
@@ -17,9 +17,18 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_CONTACT_LINK: z.string().url(),
-    NEXT_PUBLIC_REPO_LINK: z.string().url(),
-    NEXT_PUBLIC_DONATE_LINK: z.string().url(),
+    NEXT_PUBLIC_CONTACT_LINK: z
+      .string()
+      .url()
+      .default('https://github.com/bnlonyso'),
+    NEXT_PUBLIC_REPO_LINK: z
+      .string()
+      .url()
+      .default('https://github.com/bnlonyso/crashcop'),
+    NEXT_PUBLIC_DONATE_LINK: z
+      .string()
+      .url()
+      .default('https://github.com/bnlonyso/crashcop'),
   },
 
   /**
@@ -28,10 +37,13 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    RUNTIME: process.env.RUNTIME,
-    NEXT_PUBLIC_CONTACT_LINK: process.env.NEXT_PUBLIC_CONTACT_LINK,
-    NEXT_PUBLIC_REPO_LINK: process.env.NEXT_PUBLIC_REPO_LINK,
-    NEXT_PUBLIC_DONATE_LINK: process.env.NEXT_PUBLIC_DONATE_LINK,
+    RUNTIME: process.env.RUNTIME || 'node',
+    NEXT_PUBLIC_CONTACT_LINK:
+      process.env.NEXT_PUBLIC_CONTACT_LINK || 'https://github.com/bnlonyso',
+    NEXT_PUBLIC_REPO_LINK:
+      process.env.NEXT_PUBLIC_REPO_LINK || 'https://github.com/bnlonyso/crashcop',
+    NEXT_PUBLIC_DONATE_LINK:
+      process.env.NEXT_PUBLIC_DONATE_LINK || 'https://github.com/bnlonyso/crashcop',
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
