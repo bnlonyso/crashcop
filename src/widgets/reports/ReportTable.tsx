@@ -12,6 +12,7 @@ import ResponsiveModal from '@/components/ui/responsive-modal'
 import { Button } from '@/components/ui/button'
 import { ReportCard } from '@/shared/types'
 import ReportDetails from '@/widgets/reports/ReportDetails'
+import HypotheticalGradesModal from '@/widgets/reports/HypotheticalGradesModal'
 
 const ReportTable: FC<{ reportCard?: ReportCard[number] }> = ({
   reportCard,
@@ -35,7 +36,14 @@ const ReportTable: FC<{ reportCard?: ReportCard[number] }> = ({
 
   return (
     <div>
-      <Table className="mt-5 overflow-x-auto border-[1px] sm:border-0">
+      <div className="mt-4 flex items-center justify-between">
+        <span className="text-sm font-semibold text-muted-foreground">
+          Учебные результаты
+        </span>
+        <HypotheticalGradesModal reportCard={reportCard} />
+      </div>
+
+      <Table className="mt-3 overflow-x-auto border-[1px] sm:border-0">
         <TableHeader>
           <TableRow>
             <TableHead className="min-w-[150px]">Предмет</TableHead>
