@@ -70,10 +70,26 @@ const Page = () => {
         </ResponsiveModal>
       </div>
 
-      <p className="-mb-12 mt-4 text-muted-foreground sm:-mb-0">
+      <div className="mt-6 rounded-xl border bg-card p-4 text-sm text-muted-foreground">
+        <p className="font-semibold text-foreground">Первоисточник и авторство</p>
+        <p className="mt-1 text-xs leading-relaxed">
+          Этот проект является копией (форком) оригинального приложения{' '}
+          <a
+            href="https://github.com/arsendgaf/crashed.nis"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline hover:opacity-80 font-medium"
+          >
+            crashed.nis
+          </a>
+          . Сайт адаптирован с добавлением новой фиолетовой темы оформления, улучшенного интерфейса и интерактивного симулятора процентов и оценок.
+        </p>
+      </div>
+
+      <p className="-mb-12 mt-4 text-xs text-muted-foreground sm:-mb-0">
         Приложение не имеет никакого отношения к АОО НИШ. Некоторые данные
-        хранятся локально на вашем устройстве. Они никуда не передаются, не
-        обрабатываются.
+        хранятся локально на вашем устройстве. Они никуда не передаются и не
+        обрабатываются третьими лицами.
       </p>
     </div>
   )
