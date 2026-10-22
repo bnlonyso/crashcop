@@ -2,9 +2,6 @@ import NavBar from '@/widgets/navbar/NavBar'
 import React, { FC, PropsWithChildren } from 'react'
 import Header from '@/widgets/header/Header'
 import Logo from '@/components/misc/Logo'
-import { Button } from '@/components/ui/button'
-import { Ghost, GithubLogo, PiggyBank } from '@phosphor-icons/react/dist/ssr'
-import { env } from '@/env'
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -18,7 +15,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
 
         <NavBar />
       </div>
-      <footer className="mx-auto mb-3 mt-10 flex w-[92.5%] flex-col gap-3 sm:flex-row justify-between sm:mt-auto sm:max-w-[47rem] sm:items-center">
+      <footer className="mx-auto mb-3 mt-10 flex w-[92.5%] flex-row justify-between sm:mt-auto sm:max-w-[47rem] items-center">
         <div className="flex flex-col sm:flex-row sm:items-center pl-2 text-muted-foreground sm:mx-0">
           <div className="flex items-center">
             <Logo width={22} height={22} className="my-0" />
@@ -38,39 +35,6 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
             </a>
             )
           </span>
-        </div>
-
-        <div className="flex flex-row justify-center text-center">
-          <a
-            href={env.NEXT_PUBLIC_REPO_LINK || 'https://github.com/bnlonyso/crashcop'}
-            target="_blank"
-            rel="noopener"
-          >
-            <Button variant="link" className="mx-1 p-1 px-2 hover:text-primary">
-              <GithubLogo size={22} className="mx-1" />
-              <span className="hidden sm:flex">Репозиторий</span>
-            </Button>
-          </a>
-          <a
-            href={env.NEXT_PUBLIC_CONTACT_LINK || 'https://github.com/bnlonyso'}
-            target="_blank"
-            rel="noopener"
-          >
-            <Button variant="link" className="mx-1 p-1 px-2 hover:text-primary">
-              <Ghost size={22} className="mx-1" />
-              <span className="hidden sm:flex">Контакты</span>
-            </Button>
-          </a>
-          <a
-            href={env.NEXT_PUBLIC_DONATE_LINK || 'https://github.com/bnlonyso/crashcop'}
-            target="_blank"
-            rel="noopener"
-          >
-            <Button variant="link" className="mx-1 p-1 px-2 hover:text-primary">
-              <PiggyBank size={22} className="mx-1 mr-2" />{' '}
-              <span className="hidden sm:flex">Поддержать</span>
-            </Button>
-          </a>
         </div>
       </footer>
     </>

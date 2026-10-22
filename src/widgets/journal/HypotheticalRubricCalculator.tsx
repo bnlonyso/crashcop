@@ -6,6 +6,7 @@ import { Calculator } from '@phosphor-icons/react'
 import {
   AssessmentItem,
   calculatePercentage,
+  formatPercentage,
 } from '@/lib/gradeCalculator'
 
 type HypotheticalRubricCalculatorProps = {
@@ -66,9 +67,7 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
     )
   }
 
-  const diff = parseFloat(
-    (hypotheticalResult.totalPercentage - actualResult.totalPercentage).toFixed(2),
-  )
+  const diff = Math.round((hypotheticalResult.totalPercentage - actualResult.totalPercentage) * 100) / 100
 
   const activeResult = isSimulatorMode ? hypotheticalResult : actualResult
 
@@ -79,7 +78,7 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="text-2xl font-black">
-              {activeResult.totalPercentage}%
+              {formatPercentage(activeResult.totalPercentage)}%
             </span>
             <span
               className="rounded-full px-2 py-0.5 text-xs font-bold text-white"
@@ -93,7 +92,7 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
                   diff > 0 ? 'text-green-500' : 'text-red-500'
                 }`}
               >
-                {diff > 0 ? `+${diff}%` : `${diff}%`}
+                {diff > 0 ? `+${formatPercentage(diff)}%` : `${formatPercentage(diff)}%`}
               </span>
             )}
           </div>
@@ -136,7 +135,7 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
           <span className="font-semibold text-foreground">СОР</span>
           <span>
             {activeResult.sorMark}/{activeResult.sorMaxMark} —{' '}
-            <strong className="text-foreground">{activeResult.sorScore}%</strong>
+            <strong className="text-foreground">{formatPercentage(activeResult.sorScore)}%</strong>
           </span>
         </div>
 
@@ -201,7 +200,7 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
             <span className="font-semibold text-foreground">СОЧ</span>
             <span>
               {activeResult.sochMark}/{activeResult.sochMaxMark} —{' '}
-              <strong className="text-foreground">{activeResult.sochScore}%</strong>
+              <strong className="text-foreground">{formatPercentage(activeResult.sochScore)}%</strong>
             </span>
           </div>
 

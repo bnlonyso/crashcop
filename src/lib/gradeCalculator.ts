@@ -33,6 +33,14 @@ export const getColorByScore = (score: number): string => {
   return '#22c55e' // green-500
 }
 
+export const formatPercentage = (val: number | string | undefined | null): string => {
+  if (val === undefined || val === null || val === '') return '0'
+  const num = Number(val)
+  if (isNaN(num)) return '0'
+  const rounded = Math.round(num * 100) / 100
+  return String(rounded)
+}
+
 export const calculatePercentage = (
   sorList: AssessmentItem[],
   sochList: AssessmentItem[],
@@ -48,14 +56,14 @@ export const calculatePercentage = (
   const sochWeight = hasSoch ? 0.5 : 0.0
 
   const sorScore = sorMaxMark > 0
-    ? parseFloat(((sorMark / sorMaxMark) * sorWeight * 100).toFixed(2))
+    ? Math.round(((sorMark / sorMaxMark) * sorWeight * 100) * 100) / 100
     : 0
 
   const sochScore = hasSoch && sochMaxMark > 0
-    ? parseFloat(((sochMark / sochMaxMark) * sochWeight * 100).toFixed(2))
+    ? Math.round(((sochMark / sochMaxMark) * sochWeight * 100) * 100) / 100
     : 0
 
-  const totalPercentage = parseFloat((sorScore + sochScore).toFixed(2))
+  const totalPercentage = Math.round((sorScore + sochScore) * 100) / 100
   const mark = getMarkFromScore(totalPercentage)
   const markColor = getColorByScore(totalPercentage)
 
@@ -63,7 +71,6 @@ export const calculatePercentage = (
   let pointsNeededFor4: number | null = null
 
   if (hasSoch && sochMaxMark > 0) {
-    // sorScore + (x / sochMaxMark) * 50 >= 85
     const needed5 = Math.ceil(((85 - sorScore) / (sochWeight * 100)) * sochMaxMark)
     pointsNeededFor5 = needed5 <= sochMaxMark ? Math.max(0, needed5) : null
 

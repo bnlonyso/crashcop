@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { cn } from '@/lib/utils'
 import classes from '@/widgets/journal/journal.module.scss'
+import { formatPercentage } from '@/lib/gradeCalculator'
 
 const getColor = (score: number): { primary: string; bg: string } => {
   if (score < 65) return { primary: '#ff3a27', bg: '#ff3a2740' }
@@ -49,7 +50,7 @@ const JournalCard: FC<JournalCardProps> = ({ subject, mark, currentScore }) => {
             className={`scroll-m-20 text-2xl font-bold tracking-tight`}
             style={{ color: scoreColor.primary }}
           >
-            {currentScore}%
+            {formatPercentage(currentScore)}%
           </h3>
           {mark && (
             <h3

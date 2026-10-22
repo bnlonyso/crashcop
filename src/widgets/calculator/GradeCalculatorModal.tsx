@@ -15,6 +15,7 @@ import {
 import {
   AssessmentItem,
   calculatePercentage,
+  formatPercentage,
 } from '@/lib/gradeCalculator'
 
 const GradeCalculatorModal: React.FC = () => {
@@ -102,7 +103,7 @@ const GradeCalculatorModal: React.FC = () => {
               </p>
               <div className="flex items-baseline gap-2">
                 <span className="text-4xl font-extrabold tracking-tight">
-                  {result.totalPercentage}%
+                  {formatPercentage(result.totalPercentage)}%
                 </span>
                 <span
                   className="rounded-full px-2.5 py-0.5 text-xs font-bold text-white"
@@ -133,12 +134,12 @@ const GradeCalculatorModal: React.FC = () => {
           <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
             <div className="rounded bg-secondary/50 p-2">
               <span className="text-muted-foreground">Вклад СОР: </span>
-              <strong className="text-foreground">{result.sorScore}%</strong>{' '}
+              <strong className="text-foreground">{formatPercentage(result.sorScore)}%</strong>{' '}
               <span className="text-muted-foreground">({result.sorMark}/{result.sorMaxMark})</span>
             </div>
             <div className="rounded bg-secondary/50 p-2">
               <span className="text-muted-foreground">Вклад СОЧ: </span>
-              <strong className="text-foreground">{result.sochScore}%</strong>{' '}
+              <strong className="text-foreground">{formatPercentage(result.sochScore)}%</strong>{' '}
               {hasSoch && (
                 <span className="text-muted-foreground">({result.sochMark}/{result.sochMaxMark})</span>
               )}
