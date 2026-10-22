@@ -1,0 +1,17 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="crashcopGradient" x1="0" y1="0" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c084fc" />
+      <stop offset="0.5" stop-color="#9333ea" />
+      <stop offset="1" stop-color="#6366f1" />
+    </linearGradient>
+  </defs>
+  <rect width="180" height="180" rx="50" fill="url(#crashcopGradient)" />
+  <path
+    d="M117 65.25C110.25 58.5 100.8 54 89.1 54C67.5 54 49.5 70.2 49.5 91.8C49.5 113.4 67.5 129.6 89.1 129.6C100.8 129.6 110.25 125.1 117 118.35"
+    stroke="white"
+    stroke-width="14.4"
+    stroke-linecap="round"
+  />
+  <circle cx="121.5" cy="91.8" r="10.8" fill="white" />
+</svg>

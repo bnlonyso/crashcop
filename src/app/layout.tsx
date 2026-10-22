@@ -17,7 +17,13 @@ const fontSans = FontSans({
 export const metadata = {
   title: 'crashcop — электронный дневник и симулятор оценок',
   description: 'crashcop — удобный дневник и умный симулятор оценок',
-  icons: [{ rel: 'icon', url: '/favicon.ico' }],
+  icons: [
+    { rel: 'icon', url: '/icon.svg', type: 'image/svg+xml' },
+    { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' },
+    { rel: 'icon', url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    { rel: 'icon', url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    { rel: 'apple-touch-icon', url: '/apple-icon.svg' },
+  ],
 }
 
 export default function RootLayout({ children }: PropsWithChildren) {
