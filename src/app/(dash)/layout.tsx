@@ -41,19 +41,31 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         </div>
 
         <div className="flex flex-row justify-center text-center">
-          <a href={env.NEXT_PUBLIC_REPO_LINK} target="_blank" rel="noopener">
+          <a
+            href={env.NEXT_PUBLIC_REPO_LINK || 'https://github.com/bnlonyso/crashcop'}
+            target="_blank"
+            rel="noopener"
+          >
             <Button variant="link" className="mx-1 p-1 px-2 hover:text-primary">
               <GithubLogo size={22} className="mx-1" />
               <span className="hidden sm:flex">Репозиторий</span>
             </Button>
           </a>
-          <a href={env.NEXT_PUBLIC_CONTACT_LINK} target="_blank" rel="noopener">
+          <a
+            href={env.NEXT_PUBLIC_CONTACT_LINK || 'https://github.com/bnlonyso'}
+            target="_blank"
+            rel="noopener"
+          >
             <Button variant="link" className="mx-1 p-1 px-2 hover:text-primary">
               <Ghost size={22} className="mx-1" />
               <span className="hidden sm:flex">Контакты</span>
             </Button>
           </a>
-          <a href={env.NEXT_PUBLIC_DONATE_LINK} target="_blank" rel="noopener">
+          <a
+            href={env.NEXT_PUBLIC_DONATE_LINK || 'https://github.com/bnlonyso/crashcop'}
+            target="_blank"
+            rel="noopener"
+          >
             <Button variant="link" className="mx-1 p-1 px-2 hover:text-primary">
               <PiggyBank size={22} className="mx-1 mr-2" />{' '}
               <span className="hidden sm:flex">Поддержать</span>
