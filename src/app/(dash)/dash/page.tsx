@@ -7,7 +7,6 @@ import JournalNotFound from '@/widgets/journal/JournalNotFound'
 import useSettingsStore from '@/lib/hooks/store/useSettingsStore'
 import { Skeleton } from '@/components/ui/skeleton'
 import JournalList from '@/widgets/journal/Journal'
-import GradeCalculatorModal from '@/widgets/calculator/GradeCalculatorModal'
 
 const NUMERALS = {
   1: 'I',
@@ -40,10 +39,6 @@ const Page = () => {
 
   return (
     <>
-      <div className="mb-3 flex items-center justify-end">
-        <GradeCalculatorModal />
-      </div>
-
       {journal && journal?.length > 0 && !isError && (
         <Tabs
           value={current}
