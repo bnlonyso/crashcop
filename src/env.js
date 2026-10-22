@@ -24,10 +24,6 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_DONATE_LINK || 'https://github.com/bnlonyso/crashcop',
   },
 
-  skipValidation:
-    !!process.env.SKIP_ENV_VALIDATION ||
-    !!process.env.VERCEL ||
-    process.env.CI === '1' ||
-    process.env.CI === 'true',
+  skipValidation: true,
   emptyStringAsUndefined: true,
 })
