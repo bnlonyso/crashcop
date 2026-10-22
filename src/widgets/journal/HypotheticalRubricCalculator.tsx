@@ -2,7 +2,6 @@ import React, { FC, useState, useMemo } from 'react'
 import { Rubric } from '@/shared/types'
 import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Calculator } from '@phosphor-icons/react'
 import {
   AssessmentItem,
@@ -118,7 +117,10 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
           }`}
           title={isSimulatorMode ? 'Выйти из симулятора' : 'Симулятор баллов'}
         >
-          <Calculator size={18} className={isSimulatorMode ? 'text-primary' : 'text-muted-foreground'} />
+          <Calculator
+            size={18}
+            className={isSimulatorMode ? 'text-primary' : 'text-muted-foreground'}
+          />
         </Button>
       </div>
 
@@ -138,36 +140,54 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
           </span>
         </div>
 
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-2">
           {(isSimulatorMode ? sorItems : realSorItems).map((rubric) => (
             <div
               key={rubric.id}
-              className="flex items-center justify-between rounded border p-2 text-sm"
+              className="flex flex-col gap-1.5 rounded-lg border p-2.5 text-sm transition-colors"
             >
-              <span className="max-w-[70%] truncate text-xs sm:text-sm">
-                {rubric.title}
-              </span>
-
-              {isSimulatorMode ? (
-                <div className="flex items-center gap-1.5">
-                  <Input
-                    type="number"
-                    min={0}
-                    max={rubric.maxMark}
-                    value={rubric.mark}
-                    onChange={(e) =>
-                      handleUpdateSor(rubric.id, Number(e.target.value))
-                    }
-                    className="h-7 w-14 text-center text-xs p-1 font-semibold"
-                  />
-                  <span className="text-muted-foreground text-xs">
-                    / {rubric.maxMark}
-                  </span>
-                </div>
-              ) : (
-                <span className="font-medium text-xs sm:text-sm">
-                  {rubric.mark}/{rubric.maxMark}
+              <div className="flex items-center justify-between gap-2">
+                <span className="truncate text-xs sm:text-sm font-medium">
+                  {rubric.title}
                 </span>
+
+                {isSimulatorMode ? (
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <select
+                      value={rubric.mark}
+                      onChange={(e) =>
+                        handleUpdateSor(rubric.id, Number(e.target.value))
+                      }
+                      className="h-7 rounded-md border border-primary/40 bg-background px-2 text-xs font-bold text-primary focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
+                    >
+                      {Array.from({ length: rubric.maxMark + 1 }, (_, i) => (
+                        <option key={i} value={i}>
+                          {i}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="text-muted-foreground text-xs font-semibold">
+                      / {rubric.maxMark}
+                    </span>
+                  </div>
+                ) : (
+                  <span className="font-semibold text-xs sm:text-sm">
+                    {rubric.mark}/{rubric.maxMark}
+                  </span>
+                )}
+              </div>
+
+              {isSimulatorMode && (
+                <input
+                  type="range"
+                  min={0}
+                  max={rubric.maxMark}
+                  value={rubric.mark}
+                  onChange={(e) =>
+                    handleUpdateSor(rubric.id, Number(e.target.value))
+                  }
+                  className="h-1.5 w-full cursor-pointer accent-purple-600 bg-secondary rounded-lg"
+                />
               )}
             </div>
           ))}
@@ -185,36 +205,54 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
             </span>
           </div>
 
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2">
             {(isSimulatorMode ? sochItems : realSochItems).map((rubric) => (
               <div
                 key={rubric.id}
-                className="flex items-center justify-between rounded border p-2 text-sm"
+                className="flex flex-col gap-1.5 rounded-lg border p-2.5 text-sm transition-colors"
               >
-                <span className="max-w-[70%] truncate text-xs sm:text-sm">
-                  {rubric.title}
-                </span>
-
-                {isSimulatorMode ? (
-                  <div className="flex items-center gap-1.5">
-                    <Input
-                      type="number"
-                      min={0}
-                      max={rubric.maxMark}
-                      value={rubric.mark}
-                      onChange={(e) =>
-                        handleUpdateSoch(rubric.id, Number(e.target.value))
-                      }
-                      className="h-7 w-14 text-center text-xs p-1 font-semibold"
-                    />
-                    <span className="text-muted-foreground text-xs">
-                      / {rubric.maxMark}
-                    </span>
-                  </div>
-                ) : (
-                  <span className="font-medium text-xs sm:text-sm">
-                    {rubric.mark}/{rubric.maxMark}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="truncate text-xs sm:text-sm font-medium">
+                    {rubric.title}
                   </span>
+
+                  {isSimulatorMode ? (
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <select
+                        value={rubric.mark}
+                        onChange={(e) =>
+                          handleUpdateSoch(rubric.id, Number(e.target.value))
+                        }
+                        className="h-7 rounded-md border border-primary/40 bg-background px-2 text-xs font-bold text-primary focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
+                      >
+                        {Array.from({ length: rubric.maxMark + 1 }, (_, i) => (
+                          <option key={i} value={i}>
+                            {i}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="text-muted-foreground text-xs font-semibold">
+                        / {rubric.maxMark}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="font-semibold text-xs sm:text-sm">
+                      {rubric.mark}/{rubric.maxMark}
+                    </span>
+                  )}
+                </div>
+
+                {isSimulatorMode && (
+                  <input
+                    type="range"
+                    min={0}
+                    max={rubric.maxMark}
+                    value={rubric.mark}
+                    onChange={(e) =>
+                      handleUpdateSoch(rubric.id, Number(e.target.value))
+                    }
+                    className="h-1.5 w-full cursor-pointer accent-purple-600 bg-secondary rounded-lg"
+                  />
                 )}
               </div>
             ))}

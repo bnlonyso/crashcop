@@ -12,18 +12,13 @@ const Header = () => {
     <header className="my-2 flex flex-row items-center">
       <Logo />
       <div className="mx-3 py-1">
-        <div className="flex items-center gap-2">
-          <h2 className="text-ellipsis text-[18px] font-bold tracking-tight sm:text-xl">
-            {!isError && contingent
-              ? `${contingent.lastName} ${contingent.firstName}`
-              : isError
-                ? 'crashcop'
-                : 'crashcop'}
-          </h2>
-          <span className="rounded-full bg-gradient-to-r from-purple-500/15 to-indigo-500/15 px-2 py-0.5 text-[10px] font-bold text-primary border border-primary/20">
-            PRO
-          </span>
-        </div>
+        <h2 className="text-ellipsis text-[18px] font-bold tracking-tight sm:text-xl">
+          {!isError && contingent
+            ? `${contingent.lastName} ${contingent.firstName}`
+            : isError
+              ? 'crashcop'
+              : 'crashcop'}
+        </h2>
         {isLoading ||
           (isStale && (
             <>
