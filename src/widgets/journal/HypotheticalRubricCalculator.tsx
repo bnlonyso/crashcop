@@ -309,5 +309,3 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
 }
 
 export default HypotheticalRubricCalculator
-
-export default HypotheticalRubricCalculator
