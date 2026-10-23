@@ -20,14 +20,14 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
 }) => {
   const [isSimulatorMode, setIsSimulatorMode] = useState(false)
 
-  // Real data transformed into AssessmentItems
+  // Real data transformed into AssessmentItems with guaranteed unique IDs per criterion
   const realSorItems: AssessmentItem[] = useMemo(() => {
     return initialSor.map((r, i) => {
       const maxMark = Math.max(0, Number(r.maxMark) || 0)
       const rawMark = Math.max(0, Number(r.mark) || 0)
       const effectiveMax = maxMark > 0 ? maxMark : (rawMark > 0 ? rawMark : 10)
       return {
-        id: r.id || `sor-init-${i}`,
+        id: r.id ? `sor-${r.id}-${i}` : `sor-init-${i}`,
         title: r.title?.ru || r.title?.kk || `СОР ${i + 1}`,
         mark: Math.min(rawMark, effectiveMax),
         maxMark: effectiveMax,
@@ -41,7 +41,7 @@ const HypotheticalRubricCalculator: FC<HypotheticalRubricCalculatorProps> = ({
       const rawMark = Math.max(0, Number(r.mark) || 0)
       const effectiveMax = maxMark > 0 ? maxMark : (rawMark > 0 ? rawMark : 20)
       return {
-        id: r.id || `soch-init-${i}`,
+        id: r.id ? `soch-${r.id}-${i}` : `soch-init-${i}`,
         title: r.title?.ru || r.title?.kk || `СОЧ ${i + 1}`,
         mark: Math.min(rawMark, effectiveMax),
         maxMark: effectiveMax,
