@@ -22,6 +22,15 @@ const config = {
           },
         ],
       },
+      {
+        source: '/:path*(favicon.ico|icon.svg|icon.png|apple-icon.svg|apple-icon.png|favicon.svg|favicon-32x32.png|favicon-16x16.png|apple-touch-icon.png|site.webmanifest)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
     ]
   },
   images: {
