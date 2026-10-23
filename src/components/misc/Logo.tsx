@@ -4,36 +4,61 @@ import { cn } from '@/lib/utils'
 const Logo: FC<{ width?: number; height?: number; className?: string }> = ({
   width = 38,
   height = 38,
-  className = 'mb-2 ml-px mt-1',
+  className = 'mb-1 ml-px mt-0.5',
 }) => {
   return (
     <svg
       width={width}
       height={height}
-      viewBox="0 0 40 40"
+      viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn(className, 'transition-transform duration-200 hover:scale-105 select-none')}
+      className={cn(className, 'transition-transform duration-200 hover:scale-105 select-none shrink-0')}
     >
       <defs>
-        <linearGradient id="crashcopGradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#c084fc" />
-          <stop offset="0.5" stopColor="#9333ea" />
-          <stop offset="1" stopColor="#6366f1" />
+        <linearGradient id="crashcopBg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#1a0b2e" />
+          <stop offset="0.6" stopColor="#0a0312" />
+          <stop offset="1" stopColor="#000000" />
         </linearGradient>
-        <filter id="purpleGlow" x="-2" y="-2" width="44" height="44" filterUnits="userSpaceOnUse">
-          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#9333ea" floodOpacity="0.35" />
+        <linearGradient id="purpleNeon" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#e9d5ff" />
+          <stop offset="0.3" stopColor="#c084fc" />
+          <stop offset="0.7" stopColor="#9333ea" />
+          <stop offset="1" stopColor="#6b21a8" />
+        </linearGradient>
+        <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="userSpaceOnUse">
+          <feDropShadow dx="0" dy="0" stdDeviation="2.5" floodColor="#a855f7" floodOpacity="0.6" />
         </filter>
       </defs>
-      <rect width="40" height="40" rx="12" fill="url(#crashcopGradient)" filter="url(#purpleGlow)" />
-      {/* Sleek dynamic "C" + graduation/star motif */}
-      <path
-        d="M26 14.5C24.5 13 22.4 12 19.8 12C15 12 11 15.6 11 20.4C11 25.2 15 28.8 19.8 28.8C22.4 28.8 24.5 27.8 26 26.3"
-        stroke="white"
-        strokeWidth="3.2"
-        strokeLinecap="round"
+      {/* Outer rounded container with neon purple border */}
+      <rect
+        x="1.5"
+        y="1.5"
+        width="45"
+        height="45"
+        rx="13"
+        fill="url(#crashcopBg)"
+        stroke="#a855f7"
+        strokeWidth="2.5"
       />
-      <circle cx="27" cy="20.4" r="2.4" fill="white" />
+      {/* Glowing modern stylized C emblem */}
+      <path
+        d="M33 16.5C30.2 13.5 26.2 12 21.5 12C14.5 12 9 17.5 9 24.5C9 31.5 14.5 37 21.5 37C26.2 37 30.2 35.5 33 32.5"
+        stroke="url(#purpleNeon)"
+        strokeWidth="4"
+        strokeLinecap="round"
+        filter="url(#neonGlow)"
+      />
+      {/* Inner core dot and arrow */}
+      <circle cx="26.5" cy="24.5" r="3" fill="#ffffff" filter="url(#neonGlow)" />
+      <path
+        d="M32 21L36 24.5L32 28"
+        stroke="#c084fc"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
