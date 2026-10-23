@@ -32,7 +32,7 @@ const JournalElement: FC<JournalElementProps> = ({
       }
       close={<Button variant="outline">Закрыть</Button>}
       title={
-        <span className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+        <span className="scroll-m-20 text-xl font-bold tracking-tight sm:text-2xl break-words leading-snug block">
           {subject}
         </span>
       }

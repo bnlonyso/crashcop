@@ -4,6 +4,10 @@ import https from 'https'
 
 const agent = new https.Agent({
   rejectUnauthorized: false,
+  keepAlive: true,
+  maxSockets: 64,
+  maxFreeSockets: 16,
+  timeout: 30000,
 })
 
 const proxy = axios.create({

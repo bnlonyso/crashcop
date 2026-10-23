@@ -24,25 +24,17 @@ const JournalRubric: FC<JournalRubricProps> = ({ subject, quarter }) => {
     )
 
   if (isError) {
+    // If the subject has no rubrics yet (0% or not entered in NIS for this quarter),
+    // gracefully show the 0% rubric calculator state instead of a broken error screen
     return (
-      <div className="h-64 w-full">
-        <div className="items center relative top-1/2 mx-auto h-fit w-fit -translate-y-1/2 transform text-center">
-          <LinkBreak size={72} className="mx-auto text-red-600" />
-          <h2 className="scroll-m-20 text-2xl font-semibold sm:text-3xl">
-            Неизвестная ошибка
-          </h2>
-          <p className="mt-1 text-[14px] leading-5 text-muted-foreground sm:text-[17px]">
-            Не удалось получить подробные данные о предмете. Вероятно, СУШ
-            вашего филиала НИШ сейчас не работает.
-          </p>
-        </div>
-      </div>
+      <HypotheticalRubricCalculator
+        initialSor={[]}
+        initialSoch={[]}
+      />
     )
   }
 
-  if (!data) return null
-
-  const { sumChapterCriteria = [], sumQuarterCriteria = [] } = data
+  const { sumChapterCriteria = [], sumQuarterCriteria = [] } = data || {}
 
   return (
     <HypotheticalRubricCalculator

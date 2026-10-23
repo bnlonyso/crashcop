@@ -44,10 +44,10 @@ const ResponsiveModal: FC<ResponsiveModalProps> = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[560px] md:max-w-[620px] max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{description}</DialogDescription>
+            <DialogTitle className="break-words text-left">{title}</DialogTitle>
+            <DialogDescription className="break-words text-left">{description}</DialogDescription>
           </DialogHeader>
           {children}
         </DialogContent>
@@ -58,13 +58,13 @@ const ResponsiveModal: FC<ResponsiveModalProps> = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
+      <DrawerContent className="max-h-[90vh]">
+        <DrawerHeader className="text-left px-4">
+          <DrawerTitle className="break-words text-left">{title}</DrawerTitle>
+          <DrawerDescription className="break-words text-left">{description}</DrawerDescription>
         </DrawerHeader>
-        <div className="px-4">{children}</div>
-        <DrawerFooter className="pt-2">
+        <div className="px-4 overflow-y-auto max-h-[65vh] pb-2">{children}</div>
+        <DrawerFooter className="pt-2 px-4">
           <DrawerClose asChild>{close}</DrawerClose>
         </DrawerFooter>
       </DrawerContent>

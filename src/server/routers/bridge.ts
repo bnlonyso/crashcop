@@ -17,27 +17,64 @@ const app = new Hono<{
   }
 }>()
 
+// Fast in-memory cache to eliminate repeated 2-4s NIS microservice latency
+type CacheEntry<T> = { data: T; expiresAt: number }
+const serverCache = new Map<string, CacheEntry<unknown>>()
+
+const getCached = <T>(key: string): T | null => {
+  const entry = serverCache.get(key)
+  if (!entry) return null
+  if (Date.now() > entry.expiresAt) {
+    serverCache.delete(key)
+    return null
+  }
+  return entry.data as T
+}
+
+const setCached = <T>(key: string, data: T, ttlMs: number = 60000): void => {
+  // Keep cache size bounded
+  if (serverCache.size > 500) {
+    const oldestKey = serverCache.keys().next().value
+    if (oldestKey) serverCache.delete(oldestKey)
+  }
+  serverCache.set(key, { data, expiresAt: Date.now() + ttlMs })
+}
+
 app.use(async (c, next) => authMiddleware(c, next))
 
 app.get('/contingent', async (c) => {
+  const session = c.get('session')
+  const cacheKey = `contingent:${session.accessToken.slice(-24)}`
+  const cached = getCached<object>(cacheKey)
+  if (cached) return c.json(cached)
+
   const rawUserInfo = await decode<{ UserInfo: string }>(
-    c.get('session').accessToken,
+    session.accessToken,
   )
 
   const { FirstName, SecondName } = JSON.parse(rawUserInfo.UserInfo) as Userinfo
 
-  const data = await getAdditionalUserInfo(c.get('session').accessToken)
+  const data = await getAdditionalUserInfo(session.accessToken)
 
-  return c.json({
+  const result = {
     ...data,
     firstName: FirstName,
     lastName: SecondName,
-  })
+  }
+
+  setCached(cacheKey, result, 10 * 60 * 1000) // 10 minutes
+
+  return c.json(result)
 })
 
 app.get('/journal', async (c) => {
   const session = c.get('session')
+  const cacheKey = `journal:${session.city}:${session.accessToken.slice(-24)}`
+  const cached = getCached<object>(cacheKey)
+  if (cached) return c.json(cached)
+
   const journal = await getJournal(session.accessToken, session.city)
+  setCached(cacheKey, journal, 60 * 1000) // 60 seconds
 
   return c.json(journal)
 })
@@ -60,6 +97,10 @@ app.get('/journal/:subject', async (c) => {
     })
   }
 
+  const cacheKey = `rubric:${session.city}:${session.accessToken.slice(-24)}:${subjectId}:${quarter.data}`
+  const cached = getCached<object>(cacheKey)
+  if (cached) return c.json(cached)
+
   try {
     const data = await getJournalElement(
       session.accessToken,
@@ -67,6 +108,8 @@ app.get('/journal/:subject', async (c) => {
       subjectId,
       quarter.data,
     )
+
+    setCached(cacheKey, data, 60 * 1000) // 60 seconds
 
     return c.json(data)
   } catch (e) {
@@ -97,9 +140,13 @@ app.get('/journal/:subject', async (c) => {
 
 app.get('/reports', async (c) => {
   const { accessToken } = c.get('session')
+  const cacheKey = `reports:${accessToken.slice(-24)}`
+  const cached = getCached<object>(cacheKey)
+  if (cached) return c.json(cached)
 
   try {
     const reports = await getReports(accessToken)
+    setCached(cacheKey, reports, 2 * 60 * 1000) // 2 minutes
     return c.json(reports)
   } catch (e) {
     console.log(e)

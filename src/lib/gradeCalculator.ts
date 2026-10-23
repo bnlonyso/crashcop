@@ -46,31 +46,61 @@ export const calculatePercentage = (
   sochList: AssessmentItem[],
   hasSoch: boolean = true,
 ): CalculationResult => {
-  const sorMark = sorList.reduce((acc, item) => acc + (Number(item.mark) || 0), 0)
-  const sorMaxMark = sorList.reduce((acc, item) => acc + (Number(item.maxMark) || 0), 0)
+  // Sanitize and normalize items: mark cannot exceed maxMark
+  let sorMark = 0
+  let sorMaxMark = 0
+  for (const item of sorList) {
+    const rawMax = Math.max(0, Number(item.maxMark) || 0)
+    const rawMark = Math.max(0, Number(item.mark) || 0)
+    const maxMark = rawMax > 0 ? rawMax : rawMark
+    const mark = maxMark > 0 ? Math.min(rawMark, maxMark) : 0
+    sorMark += mark
+    sorMaxMark += maxMark
+  }
 
-  const sochMark = sochList.reduce((acc, item) => acc + (Number(item.mark) || 0), 0)
-  const sochMaxMark = sochList.reduce((acc, item) => acc + (Number(item.maxMark) || 0), 0)
+  let sochMark = 0
+  let sochMaxMark = 0
+  for (const item of sochList) {
+    const rawMax = Math.max(0, Number(item.maxMark) || 0)
+    const rawMark = Math.max(0, Number(item.mark) || 0)
+    const maxMark = rawMax > 0 ? rawMax : rawMark
+    const mark = maxMark > 0 ? Math.min(rawMark, maxMark) : 0
+    sochMark += mark
+    sochMaxMark += maxMark
+  }
 
-  const sorWeight = hasSoch ? 0.5 : 1.0
-  const sochWeight = hasSoch ? 0.5 : 0.0
+  const actuallyHasSoch = hasSoch && sochList.length > 0 && sochMaxMark > 0
+  const sorWeight = actuallyHasSoch ? 0.5 : 1.0
+  const sochWeight = actuallyHasSoch ? 0.5 : 0.0
 
-  const sorScore = sorMaxMark > 0
-    ? Math.round(((sorMark / sorMaxMark) * sorWeight * 100) * 100) / 100
+  const rawSorScore = sorMaxMark > 0
+    ? ((sorMark / sorMaxMark) * sorWeight * 100)
     : 0
+  const sorScore = Math.min(
+    sorWeight * 100,
+    Math.max(0, Math.round(rawSorScore * 100) / 100),
+  )
 
-  const sochScore = hasSoch && sochMaxMark > 0
-    ? Math.round(((sochMark / sochMaxMark) * sochWeight * 100) * 100) / 100
+  const rawSochScore = actuallyHasSoch && sochMaxMark > 0
+    ? ((sochMark / sochMaxMark) * sochWeight * 100)
     : 0
+  const sochScore = Math.min(
+    sochWeight * 100,
+    Math.max(0, Math.round(rawSochScore * 100) / 100),
+  )
 
-  const totalPercentage = Math.round((sorScore + sochScore) * 100) / 100
+  // Clamp total percentage between 0 and 100%
+  const totalPercentage = Math.min(
+    100,
+    Math.max(0, Math.round((sorScore + sochScore) * 100) / 100),
+  )
   const mark = getMarkFromScore(totalPercentage)
   const markColor = getColorByScore(totalPercentage)
 
   let pointsNeededFor5: number | null = null
   let pointsNeededFor4: number | null = null
 
-  if (hasSoch && sochMaxMark > 0) {
+  if (actuallyHasSoch && sochMaxMark > 0) {
     const needed5 = Math.ceil(((85 - sorScore) / (sochWeight * 100)) * sochMaxMark)
     pointsNeededFor5 = needed5 <= sochMaxMark ? Math.max(0, needed5) : null
 

@@ -15,8 +15,10 @@ const QueryProvider: FC<PropsWithChildren> = ({ children }) => {
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
-            retry: false,
-            refetchInterval: 300000, // 5 mins
+            retry: 1,
+            staleTime: 1000 * 60 * 5, // 5 mins fresh - instant switching
+            gcTime: 1000 * 60 * 60 * 24, // 24 hours in cache
+            refetchInterval: 1000 * 60 * 5, // 5 mins auto refetch
             throwOnError: (error) => {
               if (error.message === 'UNAUTHORIZED') {
                 queryClient.removeQueries()

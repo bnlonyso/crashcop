@@ -49,6 +49,12 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  compress: true,
+  poweredByHeader: false,
+  swcMinify: true,
+  experimental: {
+    optimizePackageImports: ['@phosphor-icons/react', 'lucide-react'],
+  },
 }
 
 export default config
