@@ -32,7 +32,7 @@ const JournalCard: FC<JournalCardProps> = ({ subject, mark, currentScore }) => {
   return (
     <div
       className={cn(
-        'my-2.5 h-fit min-h-24 flex-col overflow-hidden rounded-xl bg-card shadow transition-colors hover:text-primary dark:shadow-none dark:hover:brightness-125',
+        'my-2.5 h-fit min-h-24 flex-col overflow-hidden rounded-xl bg-card border border-border/80 shadow transition-all hover:border-primary/50 hover:text-primary dark:shadow-none',
         classes.card,
       )}
     >
