@@ -38,7 +38,7 @@ const JournalList: FC<JournalProps> = ({ journal }) => {
       { id: string; name: { ru: string; kk: string; en: string } }
     >()
 
-    // 1. From all quarters
+    // 1. From all quarters of the CURRENT school year journal
     if (allQuarters && Array.isArray(allQuarters)) {
       for (const q of allQuarters) {
         for (const subj of q.subjects || []) {
@@ -49,10 +49,14 @@ const JournalList: FC<JournalProps> = ({ journal }) => {
       }
     }
 
-    // 2. From annual report cards
+    // 2. ONLY from the CURRENT school year report card (isCurrent === true)
+    // Never load subjects from past school years / classes
     if (reports && Array.isArray(reports)) {
-      for (const report of reports) {
-        for (const item of report.reportCard || []) {
+      const currentReport = reports.find(
+        (r) => r.schoolYear && r.schoolYear.isCurrent,
+      )
+      if (currentReport) {
+        for (const item of currentReport.reportCard || []) {
           if (item.subject?.id && !map.has(item.subject.id)) {
             map.set(item.subject.id, {
               id: item.subject.id,
