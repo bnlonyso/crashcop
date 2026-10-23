@@ -4,7 +4,6 @@ import JournalElement from '@/widgets/journal/JournalElement'
 import JournalNotFound from '@/widgets/journal/JournalNotFound'
 import useSettingsStore from '@/lib/hooks/store/useSettingsStore'
 import { useJournal } from '@/lib/hooks/useJournal'
-import { useReports } from '@/lib/hooks/useReports'
 
 type JournalProps = {
   journal: Journal[number]
@@ -29,16 +28,15 @@ const compareFunction =
 const JournalList: FC<JournalProps> = ({ journal }) => {
   const sort = useSettingsStore((state) => state.sort)
   const { data: allQuarters } = useJournal()
-  const { data: reports } = useReports()
 
-  // Collect all known subjects across all quarters and report card
+  // Collect all known subjects strictly across all quarters of the current school year's journal
+  // Never pull from report cards to avoid showing subjects from past grades (e.g. 11th grade)
   const allMasterSubjects = useMemo(() => {
     const map = new Map<
       string,
       { id: string; name: { ru: string; kk: string; en: string } }
     >()
 
-    // 1. From all quarters of the CURRENT school year journal
     if (allQuarters && Array.isArray(allQuarters)) {
       for (const q of allQuarters) {
         for (const subj of q.subjects || []) {
@@ -49,26 +47,8 @@ const JournalList: FC<JournalProps> = ({ journal }) => {
       }
     }
 
-    // 2. ONLY from the CURRENT school year report card (isCurrent === true)
-    // Never load subjects from past school years / classes
-    if (reports && Array.isArray(reports)) {
-      const currentReport = reports.find(
-        (r) => r.schoolYear && r.schoolYear.isCurrent,
-      )
-      if (currentReport) {
-        for (const item of currentReport.reportCard || []) {
-          if (item.subject?.id && !map.has(item.subject.id)) {
-            map.set(item.subject.id, {
-              id: item.subject.id,
-              name: item.subject.name,
-            })
-          }
-        }
-      }
-    }
-
     return map
-  }, [allQuarters, reports])
+  }, [allQuarters])
 
   // Merge subjects so all subjects appear even if they currently have 0% / no grades yet
   const fullSubjectList = useMemo(() => {
